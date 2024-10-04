@@ -1,0 +1,44 @@
+{
+  "name": "@iceylan/tokenizer",
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "description": "Converts the given strings to universal tokens.",
+  "main": "./dist/tokenizer.umd.cjs",
+  "module": "./dist/tokenizer.js",
+  "exports": {
+    ".": {
+      "import": "./dist/tokenizer.js",
+      "require": "./dist/tokenizer.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "release": "standard-version",
+    "publish-package": "npm publish --access=public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ismailceylan/tokenizer.git"
+  },
+  "keywords": [
+    "tokenizer",
+    "javascript",
+    "parsing",
+    "parse",
+    "token"
+  ],
+  "author": "Ismail Ceylan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ismailceylan/tokenizer/issues"
+  },
+  "homepage": "https://github.com/ismailceylan/tokenizer#readme",
+  "devDependencies": {
+    "vite": "^5.4.8"
+  }
+}
