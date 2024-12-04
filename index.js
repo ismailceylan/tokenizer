@@ -1,5 +1,2 @@
-import tokenize from "./lib/tokenize.js";
-
-console.log( 
-	tokenize( "hello world!" )
-);
+export { default as tokenize } from "./lib/tokenize.js";
+export * from "./lib/constants.js";
