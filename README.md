@@ -9,7 +9,7 @@ You can try it out [here](https://ismailceylan.github.io/tokenizer/) in a real w
 
 ## Usage
 ```js
-import tokenize from "@iceylan/tokenizer";
+import { tokenize, BLANK } from "@iceylan/tokenizer";
 
 const SPACE = Symbol( "space" );
 const EXCLAMATION = Symbol( "excla" );
@@ -60,13 +60,13 @@ The result of this example will be:
 	{ name: Symbol( "blank" ), value: "Hello",  start: 1,  end: 5,  line: 1 },
 
 	// instead of this
-	// { name: "space", value: " ",   start: 6, end: 6, line: 1 },
-	// { name: "space", value: " ",   start: 7, end: 7, line: 1 },
-	// { name: "space", value: " ",   start: 8, end: 8, line: 1 },
+	// { name: "space", value: " ", start: 6, end: 6, line: 1 },
+	// { name: "space", value: " ", start: 7, end: 7, line: 1 },
+	// { name: "space", value: " ", start: 8, end: 8, line: 1 },
 	
 	// the space tokens will be merged into one
-	{ name: "space",    value: "   ", start: 6, end: 8, line: 1 },
+	{ name: "space", value: "   ", start: 6, end: 8, line: 1 },
 
-	{ name: Symbol( "blank" ), value: "World", start: 9, end: 13, line: 2 },
+	{ name: Symbol( "blank" ), value: "World", start: 9, end: 13, line: 1 },
 ]
 ```

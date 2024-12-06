@@ -49,7 +49,7 @@ function onEditorChange({ target })
 		}
 		else
 		{
-			html += `<span contenteditable="true" class="token ${token.name} ${rules[ token.name ].className}">${token.value.replace( / /g, "&nbsp;" )}</span>`;
+			html += `<span class="token ${token.name} ${rules[ token.name ].className}">${token.value.replace( / /g, "&nbsp;" )}</span>`;
 		}
 	}
 
@@ -83,6 +83,7 @@ div {
     border-radius: 14px;
     font: 100 18px monospace, serif;
 	width: 625px;
+	flex-shrink: 0;
 	white-space: break-spaces;
 }
 
@@ -103,6 +104,10 @@ div {
 
 .token.silver {
 	color: silver;
+}
+
+.token.aliceblue {
+	color: aliceblue;
 }
 
 </style>

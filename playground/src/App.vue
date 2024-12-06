@@ -2,6 +2,7 @@
 	<div id="playground">
 		<RuleMaker />
 		<Editor />
+		<Tokens />
 	</div>
 </template>
 
@@ -9,6 +10,7 @@
 import { provide, reactive, ref } from "vue";
 import Editor from "./components/Editor.vue";
 import RuleMaker from "./components/RuleMaker.vue";
+import Tokens from "./components/Tokens.vue";
 
 const rules = reactive(
 {
@@ -41,7 +43,12 @@ const rules = reactive(
 	punc:
 	{
 		className: "orange",
-		targets: [ "'", '"', "`", "=", ">", "<", "(", ")", "[", "]", "{", "}", ",", ";" ]
+		targets: [ "'", '"', "`", "=", ">", "<", "(", ")", "[", "]", ",", ";" ]
+	},
+	curlys:
+	{
+		className: "blueviolet",
+		targets: [ "{", "}" ]
 	},
 	number:
 	{

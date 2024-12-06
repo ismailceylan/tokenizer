@@ -1,6 +1,6 @@
 <template>
 	<div id="rule-maker">
-		<h2>Define Tokens</h2>
+		<h2>Token Definitions</h2>
 
 		<div id="form">
 			<input placeholder="token label..." v-model="newRuleLabel" style="width:100px">
@@ -37,7 +37,7 @@ const newRuleLabel = ref( "" );
 const newRuleTokens = ref( "" );
 const newRuleColor = ref( "" );
 
-const classList = [ "orangered", "orange", "blueviolet", "silver" ]
+const classList = [ "orangered", "orange", "blueviolet", "silver", "aliceblue" ]
 
 function addRule()
 {
