@@ -94,10 +94,8 @@ The result of this example will be:
 ```js
 [
 	{ name: Symbol( "blank" ), value: "Hello", start: 1,  end: 5,  line: 1 },
-	{ name: "space",           value: " ",     start: 6,  end: 6,  line: 1 },
-	{ name: "space",           value: " ",     start: 7,  end: 7,  line: 1 },
-	{ name: "space",           value: " ",     start: 8,  end: 8,  line: 1 },
+	{ name: "space",           value: "   ",   start: 6,  end: 8,  line: 1 },
 	{ name: Symbol( "blank" ), value: "World", start: 9,  end: 13, line: 1 },
-	{ name: Symbol( "dot" ),   value: ".",     start: 14, end: 14, line: 1 },
+	{ name: Symbol( "dot" ),   value: ".",     start: 14, end: 16, line: 1 },
 ]	
 ```
