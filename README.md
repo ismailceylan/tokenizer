@@ -96,6 +96,8 @@ The result of this example will be:
 	{ name: Symbol( "blank" ), value: "Hello", start: 1,  end: 5,  line: 1 },
 	{ name: "space",           value: "   ",   start: 6,  end: 8,  line: 1 },
 	{ name: Symbol( "blank" ), value: "World", start: 9,  end: 13, line: 1 },
-	{ name: Symbol( "dot" ),   value: ".",     start: 14, end: 16, line: 1 },
+	{ name: Symbol( "dot" ),   value: ".",     start: 14, end: 14, line: 1 },
+	{ name: Symbol( "dot" ),   value: ".",     start: 15, end: 15, line: 1 },
+	{ name: Symbol( "dot" ),   value: ".",     start: 16, end: 16, line: 1 },
 ]	
 ```
