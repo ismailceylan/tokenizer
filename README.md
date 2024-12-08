@@ -5,7 +5,9 @@ This javascript library converts the given strings to universal tokens. With the
 You can try it out [here](https://ismailceylan.github.io/tokenizer/) in a real world application.
 
 ## Installation
-`npm install @iceylan/tokenizer`
+```bash
+npm install @iceylan/tokenizer
+```
 
 ## Usage
 ```js
