@@ -15,7 +15,8 @@ import select from "selection-range";
 
 const rules = inject( "rules" );
 const tokens = inject( "tokens" );
-
+const merge = inject( "merge" );
+window.tokenize = tokenize;
 watch(
 	rules,
 	throttle(() =>
@@ -35,7 +36,7 @@ function onEditorChange({ target })
 	const value = target.innerText.split( "" ).map( i => i.charCodeAt( 0 ) == 160? " " : i ).join( "" );
 	let html = "";
 	
-	tokens.value = tokenize( value, normalizedRules( rules ), { mergeTokens: true });
+	tokens.value = tokenize( value, normalizedRules( rules ), { mergeTokens: merge.value });
 
 	for( const token of tokens.value )
 	{
@@ -66,7 +67,7 @@ function normalizedRules( rules )
 
 	for( const rule in rules )
 	{
-		rulesStack.push([ rule, rules[ rule ].targets ]);
+		rulesStack.push([ rule, rules[ rule ].targets, rules[ rule ].options ]);
 	}
 
 	return rulesStack;
@@ -106,8 +107,16 @@ div {
 	color: silver;
 }
 
-.token.aliceblue {
-	color: aliceblue;
+.token.aqua {
+	color: aqua;
+}
+
+.token.chartreuse {
+	color: chartreuse;
+}
+
+.token.magenta {
+	color: magenta;
 }
 
 </style>
