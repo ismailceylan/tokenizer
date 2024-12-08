@@ -70,3 +70,32 @@ The result of this example will be:
 	{ name: Symbol( "blank" ), value: "World", start: 9, end: 13, line: 1 },
 ]
 ```
+
+## Reversing Token Merging Setting
+Sometimes we might want to merge all the adjacent tokens into a single token globally but still we might want to keep some tokens not merged. It could also be the opposite. We might want to keep separated all the tokens globally but merge some of them. To accomplish this, we can define an options object in the rule definition.
+
+```js
+const text = "Hello   World...";
+const rules =
+[
+	// this token will be merged
+	[ "space" , " " ],
+	// this token will not be merged
+	[ "dot" , ".", { mergeTokens: false }],
+];
+
+const tokens = tokenize( text, rules, { mergeTokens: true });
+```
+
+The result of this example will be:
+
+```js
+[
+	{ name: Symbol( "blank" ), value: "Hello", start: 1,  end: 5,  line: 1 },
+	{ name: "space",           value: " ",     start: 6,  end: 6,  line: 1 },
+	{ name: "space",           value: " ",     start: 7,  end: 7,  line: 1 },
+	{ name: "space",           value: " ",     start: 8,  end: 8,  line: 1 },
+	{ name: Symbol( "blank" ), value: "World", start: 9,  end: 13, line: 1 },
+	{ name: Symbol( "dot" ),   value: ".",     start: 14, end: 14, line: 1 },
+]	
+```
