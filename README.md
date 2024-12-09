@@ -83,7 +83,7 @@ const rules =
 	// this token will be merged
 	[ "space" , " " ],
 	// this token will not be merged
-	[ "dot" , ".", { mergeTokens: false }],
+	[ "dot" , ".", { merge: false }],
 ];
 
 const tokens = tokenize( text, rules, { mergeTokens: true });
