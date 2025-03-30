@@ -1,40 +1,40 @@
-var a = Object.defineProperty;
-var w = (r, s, t) => s in r ? a(r, s, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[s] = t;
-var n = (r, s, t) => w(r, typeof s != "symbol" ? s + "" : s, t);
-const g = Symbol("newline"), u = Symbol("blank");
+var m = Object.defineProperty;
+var d = (e, t, s) => t in e ? m(e, t, { enumerable: !0, configurable: !0, writable: !0, value: s }) : e[t] = s;
+var h = (e, t, s) => d(e, typeof t != "symbol" ? t + "" : t, s);
+const E = Symbol("space"), I = Symbol("exclamation"), S = Symbol("newline"), p = Symbol("blank");
 class l {
-  constructor(s, t = "", e = 1, i = 1, o = 1) {
+  constructor(t, s = "", r = 1, i = 1, n = 1) {
     /**
      * The name of the token.
      * 
      * @type {Symbol}
      */
-    n(this, "name");
+    h(this, "name");
     /**
      * The value of the token.
      * 
      * @type {string}
      */
-    n(this, "value");
+    h(this, "value");
     /**
      * The line number of the token.
      * 
      * @type {number}
      */
-    n(this, "line");
+    h(this, "line");
     /**
      * The start position of the token.
      * 
      * @type {number}
      */
-    n(this, "start");
+    h(this, "start");
     /**
      * The end position of the token.
      * 
      * @type {number}
      */
-    n(this, "end");
-    this.name = s, this.value = t, this.line = e, this.start = i, this.end = o;
+    h(this, "end");
+    this.name = t, this.value = s, this.line = r, this.start = i, this.end = n;
   }
   /**
    * Returns the length of the token's value.
@@ -45,51 +45,96 @@ class l {
     return this.value.length;
   }
 }
-class d extends Array {
+function w(e) {
+  return e.split(`
+`).length;
+}
+class b extends Array {
+  /**
+   * Gets the first token from the stack.
+   * 
+   * @returns {Token}
+   */
+  get first() {
+    return this[0];
+  }
+  /**
+   * Gets the last token from the stack.
+   * 
+   * @returns {Token}
+   */
+  get latest() {
+    return this[this.length - 1];
+  }
   /**
    * Appends the given string to the latest text node in the stack.
    * If the stack is empty or the latest token is not a text node,
-   * a new text node is created. The cursor position is updated
-   * as well.
+   * a new text node is created. It returns the latest token.
    *
    * @param {string} text - The text to append
+   * @param {string|Symbol} nodeName - The name of the node
+   * @returns {Token}
    */
-  pushToLatestTextNode(s) {
-    let t = this[this.length - 1];
-    t ? (t == null ? void 0 : t.name) !== u ? this.push(
-      t = new l(
-        u,
-        "",
-        t.line,
-        t.ends,
-        t.ends
-      )
-    ) : t.end += s.length : this.push(
-      t = new l(u)
-    ), t.value += s;
+  pushToLatestNode(t, s) {
+    let r = this[this.length - 1];
+    if (!r)
+      this.push(
+        // create a new text node
+        r = new l(
+          s,
+          t,
+          1,
+          1,
+          (t || "").length
+        )
+      );
+    else if (r.name !== s)
+      this.push(
+        // create a new text node
+        r = new l(
+          s,
+          t,
+          r.line,
+          r.start + 1,
+          (t || "").length
+        )
+      );
+    else if (r.name === s) {
+      const i = w(t) - 1;
+      r.value += t, r.end += t.length, i > 0 && (r.line += i);
+    }
+    return r;
   }
   /**
-   * Adds a token to the stack and returns the new
-   * length of the stack.
+   * Adds a token to the stack and returns the new length of
+   * the stack.
    *
    * @param {Token} token The token to add.
-   * @returns {number} The stack itself.
+   * @returns {number}
    */
-  push(s) {
-    const t = this[this.length - 1];
-    return t && (s.start = t.end, s.line = t.line + s.value.split(`
-`).length - 1, s.end = s.start + s.value.length), super.push(s);
+  push(t) {
+    const s = this[this.length - 1];
+    return s && (t.start = s.end + 1, t.end = t.start + t.value.length - 1, t.line = s.line + w(t.value) - 1), super.push(t);
+  }
+  /**
+   * Converts the stack of tokens into a single string by
+   * concatenating the values of each token.
+   *
+   * @returns {string} The concatenated string of token values.
+   */
+  toString() {
+    return this.map((t) => t.value).join("");
   }
 }
-var m = Object.defineProperty, f = (r, s, t) => s in r ? m(r, s, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[s] = t, h = (r, s, t) => f(r, typeof s != "symbol" ? s + "" : s, t);
-class b {
+var v = Object.defineProperty, N = (e, t, s) => t in e ? v(e, t, { enumerable: !0, configurable: !0, writable: !0, value: s }) : e[t] = s, c = (e, t, s) => N(e, typeof t != "symbol" ? t + "" : t, s);
+class y {
   /**
    * Initialize the stream.
    * 
    * @param {string} raw string data to get streamed
    */
-  constructor(s) {
-    h(this, "BEGINNING", Symbol("beginning")), h(this, "ENDING", Symbol("ending")), h(this, "raw", ""), h(this, "cursor", 0), this.raw = s;
+  constructor(t) {
+    c(this, "BEGINNING", Symbol("beginning")), c(this, "ENDING", Symbol("ending")), c(this, "raw", ""), c(this, "cursor", 0), this.raw = t;
   }
   /**
    * Get the current character.
@@ -127,11 +172,11 @@ class b {
    * @param {string} needle a string to check
    * @returns {boolean}
    */
-  matches(s) {
+  matches(t) {
     return this.raw.slice(
       this.cursor,
-      this.cursor + s.length
-    ) === s;
+      this.cursor + t.length
+    ) === t;
   }
   /**
    * Checks if the given needle matches before the current position.
@@ -144,11 +189,11 @@ class b {
    * @param {string} needle a string to check
    * @returns {boolean}
    */
-  before(s) {
+  before(t) {
     return this.raw.slice(
-      this.cursor - s.length,
+      this.cursor - t.length,
       this.cursor
-    ) === s;
+    ) === t;
   }
   /**
    * Checks if the given needle matches after the current position.
@@ -161,11 +206,11 @@ class b {
    * @param {string} needle a string to check
    * @returns {boolean}
    */
-  after(s) {
+  after(t) {
     return this.raw.slice(
       this.cursor + 1,
-      this.cursor + s.length + 1
-    ) === s;
+      this.cursor + t.length + 1
+    ) === t;
   }
   /**
    * Calculates there are how many characters between the current
@@ -190,12 +235,12 @@ class b {
    * stream or the symbol "beginning" or "ending".
    * @returns {number} The index representing the distance to the needle.
    */
-  distanceTo(s) {
-    const t = s === this.BEGINNING ? this.cursor : s === this.ENDING ? this.raw.length - this.cursor - 1 : this.raw.indexOf(
-      s,
+  distanceTo(t) {
+    const s = t === this.BEGINNING ? this.cursor : t === this.ENDING ? this.raw.length - this.cursor - 1 : this.raw.indexOf(
+      t,
       this.cursor
     ) - this.cursor - 1;
-    return t < 0 ? 1 / 0 : t;
+    return s < 0 ? 1 / 0 : s;
   }
   /**
    * Returns an array of arrays, where each inner array contains a
@@ -206,11 +251,11 @@ class b {
    * @param {Array<string>} needles - An array of needles to find the closest match for.
    * @returns {[string, number][]}
    */
-  closest(s) {
-    return s.map(
-      (t) => [t, this.distanceTo(t)]
+  closest(t) {
+    return t.map(
+      (s) => [s, this.distanceTo(s)]
     ).sort(
-      (t, e) => t[1] - e[1]
+      (s, r) => s[1] - r[1]
     );
   }
   /**
@@ -219,11 +264,11 @@ class b {
    * @returns {Function} The rollback function that resets the cursor.
    */
   startTransaction() {
-    const { cursor: s } = this;
-    function t() {
-      this.cursor = s;
+    const { cursor: t } = this;
+    function s() {
+      this.cursor = t;
     }
-    return t.bind(this);
+    return s.bind(this);
   }
   /**
    * Returns a substring from the current cursor position to the first
@@ -240,12 +285,12 @@ class b {
    * @param {string} target - The string to search for in stream.
    * @returns {string|undefined}
    */
-  getUntil(s) {
-    const t = this.raw.indexOf(s, this.cursor);
-    if (t === -1)
+  getUntil(t) {
+    const s = this.raw.indexOf(t, this.cursor);
+    if (s === -1)
       return;
-    const e = this.raw.slice(this.cursor, t);
-    return this.cursor += e.length, e;
+    const r = this.raw.slice(this.cursor, s);
+    return this.cursor += r.length, r;
   }
   /**
    * Slices a portion from the current position of the stream to the
@@ -261,16 +306,16 @@ class b {
    * @throws {RangeError} when `length` is negative
    * @returns {string} The sliced portion of the raw data.
    */
-  slice(s) {
-    if (s < 0)
+  slice(t) {
+    if (t < 0)
       throw new RangeError(
-        `Cannot slice backwards from ${this.cursor} to ${s}.`
+        `Cannot slice backwards from ${this.cursor} to ${t}.`
       );
-    const t = this.raw.slice(
+    const s = this.raw.slice(
       this.cursor,
-      this.cursor + s
+      this.cursor + t
     );
-    return this.cursor = s === 1 / 0 ? this.raw.length : this.cursor + s, t;
+    return this.cursor = t === 1 / 0 ? this.raw.length : this.cursor + t, s;
   }
   /**
    * Moves the cursor by the specified length from the current position.
@@ -284,8 +329,8 @@ class b {
    * @param {number} length - The amount by which to move the cursor.
    * @returns {this}
    */
-  move(s) {
-    return this.cursor += s, this;
+  move(t) {
+    return this.cursor += t, this;
   }
   /**
    * Sets the cursor to the specified position.
@@ -299,8 +344,8 @@ class b {
    * @param {number} position - The new cursor position.
    * @returns {this}
    */
-  moveTo(s) {
-    return this.cursor = s, this;
+  moveTo(t) {
+    return this.cursor = t, this;
   }
   /**
    * Finds the index of the target in the stream starting from the
@@ -309,9 +354,9 @@ class b {
    * @param {string} target - The string to search for in the stream.
    * @returns {number} The index of the target in the stream.
    */
-  jumpTo(s) {
+  jumpTo(t) {
     return this.cursor = this.raw.indexOf(
-      s,
+      t,
       this.cursor
     );
   }
@@ -348,34 +393,35 @@ class b {
    * @param {string|string[]} target - The string(s) to search for in the stream.
    * @returns {string}
    */
-  consume(s) {
-    let t;
-    const e = this.cursor;
-    for (Array.isArray(s) || (s = [s]); (t = s.findIndex((i) => this.matches(i))) > -1; )
-      this.move(s[t].length);
-    return this.raw.slice(e, this.cursor);
+  consume(t) {
+    let s;
+    const r = this.cursor;
+    for (Array.isArray(t) || (t = [t]); (s = t.findIndex((i) => this.matches(i))) > -1; )
+      this.move(t[s].length);
+    return this.raw.slice(r, this.cursor);
   }
 }
-function N(r, s) {
-  const t = new d(), e = new b(r);
+function A(e, t, { mergeTokens: s = !1 } = {}) {
+  const r = new b(), i = new y(e);
   do {
-    let i;
-    for (const [o, c] of s)
-      e.matches(c) && (i = new l(), i.name = o, i.value = c, t.push(i), e.cursor += c.length - 1);
-    i || t.pushToLatestTextNode(e.current);
-  } while (e.next !== void 0);
-  return t;
+    let n;
+    t: for (let [a, u, { merge: g } = {}] of t) {
+      let f = s;
+      typeof u == "string" && (u = [u]), g !== void 0 && (f = g);
+      for (const o of u)
+        if (i.matches(o)) {
+          f ? n = r.pushToLatestNode(o, a) : (n = new l(a, o), n.end = i.cursor + o.length, r.push(n)), i.cursor += o.length - 1;
+          break t;
+        }
+    }
+    n || r.pushToLatestNode(i.current, p);
+  } while (i.next !== void 0);
+  return r;
 }
-const p = Symbol("space"), v = Symbol("exclamation");
-console.log(
-  N(
-    "hello world!",
-    [
-      [p, " "],
-      [Symbol("double asterix"), "**"],
-      [g, `
-`],
-      [v, "!"]
-    ]
-  )
-);
+export {
+  p as BLANK,
+  I as EXCLAMATION,
+  S as NEWLINE,
+  E as SPACE,
+  A as tokenize
+};
