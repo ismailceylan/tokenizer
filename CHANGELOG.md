@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/ismailceylan/tokenizer/compare/v0.0.3...v0.0.4) (2025-03-30)
+
+
+### Features
+
+* add ability to specify token based merging setting ([c914216](https://github.com/ismailceylan/tokenizer/commit/c9142161a97155cf124ff34d64c6d2db1e343bdf))
+* add first and latest getters ([569dd0c](https://github.com/ismailceylan/tokenizer/commit/569dd0cd776e588ea6d9ce139af58f99aee21e5e))
+* add toString method ([7271764](https://github.com/ismailceylan/tokenizer/commit/7271764078253ad3800bf8c541a0d8027ce7f742))
+
+
+### Bug Fixes
+
+* calculating the number of line of merged tokens ([0597e93](https://github.com/ismailceylan/tokenizer/commit/0597e93c56edce9ae447ce8741ec51f84c773063))
+* wrong line number calculations ([cb5d2d3](https://github.com/ismailceylan/tokenizer/commit/cb5d2d3b0ffe8261939b1987d28e3dbd87b49b87))
+
 ### [0.0.3](https://github.com/ismailceylan/tokenizer/compare/v0.0.2...v0.0.3) (2024-12-06)
 
 
